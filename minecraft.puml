@@ -1,0 +1,53 @@
+
+@startuml
+title Minecraft Game
+
+class Player {
+    - playerName : String
+    - xPosition : int
+    - yPosition : int
+    - movementSpeed : double
+    - inventory : int
+
+    + moveLeft() : void
+    + moveRight() : void
+    + jump() : void
+    + collectBlock(block : Block) : void
+    + breakBlock(block : Block) : void
+    + placeBlock(world : World, x : int, y : int) : void
+    + getPosition() : String
+}
+
+class World {
+    - worldName : String
+    - width : int
+    - height : int
+    - blocks : Block[][]
+
+    + generateWorld() : void
+    + getBlock(x : int, y : int) : Block
+    + addBlock(block : Block) : void
+    + removeBlock(x : int, y : int) : void
+    + checkCollision(player : Player) : boolean
+    + isValidPosition(x : int, y : int) : boolean
+}
+
+class Block {
+    - xPosition : int
+    - yPosition : int
+    - blockType : String
+    - hardness : int
+    - isSolid : boolean
+
+    + getBlockType() : String
+    + getHardness() : int
+    + isSolid() : boolean
+    + breakBlock() : void
+}
+
+' Relationships
+World "1" *-- "0..*" Block : contains
+Player "1" --> "1" World : plays
+Player "1" --> "0..*" Block : collects / breaks
+
+@enduml
